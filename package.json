@@ -1,6 +1,6 @@
 {
   "name": "yxzq-utils-node",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "dist/dist-cjs/index.cjs",
   "module": "dist/dist-esm/index.js",
   "type": "module",
