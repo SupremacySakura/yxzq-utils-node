@@ -7,12 +7,23 @@ interface UploadConfig {
     folderName?: string
     fileName?: string
     url?: string
-    useDate?: string
+    useDate?: 'yes' | 'no'
     ext?: string
 }
-const uploadResource = async (file: File | Blob | Buffer | fs.ReadStream, config: UploadConfig) => {
+interface UploadResult {
+    message: string
+    error?: any
+    filePath: string | null
+    code: number
+}
+const uploadResource = async (file: File | Blob | Buffer | fs.ReadStream, config: UploadConfig = {}): Promise<UploadResult> => {
     if (!file) {
-        return
+        return {
+            message: 'file is required',
+            error: 'file is required',
+            filePath: null,
+            code: 400
+        }
     }
     const {
         folderName = 'default',
@@ -26,16 +37,31 @@ const uploadResource = async (file: File | Blob | Buffer | fs.ReadStream, config
     if (checkIfInstanceOf(file, Buffer) || checkIfInstanceOf(file, fs.ReadStream) || checkIfInstanceOf(file, Blob) || checkIfInstanceOf(file, File)) {
         formData.append('file', file)
     } else {
-        throw new Error('file type not supported')
+        return {
+            message: 'file type is not supported',
+            error: 'file type is not supported',
+            filePath: null,
+            code: 400
+        }
     }
     formData.append('folderName', folderName)
     formData.append('fileName', fileName)
     formData.append('useDate', useDate)
     formData.append('ext', ext)
-    const response = await axios.post(wholeUrl, formData, {
-        headers: formData.getHeaders(),
-    })
-    return response.data
+    try {
+        const response = await axios.post(wholeUrl, formData, {
+            headers: formData.getHeaders(),
+        })
+        return response.data
+    } catch (err) {
+        return {
+            message: 'An error occurred during the request',
+            error: err,
+            filePath: null,
+            code: 400
+        }
+    }
+
 }
 export {
     uploadResource,
