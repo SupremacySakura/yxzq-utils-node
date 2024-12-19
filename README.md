@@ -1,8 +1,9 @@
-# yxzq-utils
+# yxzq-utils-node
 
-`yxzq-utils` 是一个工具库，支持在后端读取和上传文件，方便处理文件上传和静态资源管理。
+`yxzq-utils-node` 是一个工具库，支持在后端读取和上传文件，方便处理文件上传和静态资源管理。
 
 ## 目录
+
 - [安装](#安装)
 - [使用](#使用)
   - [JavaScript 示例](#javascript-示例)
@@ -14,13 +15,15 @@
   - [搭配工具](#搭配工具)
 
 ## 安装
+
 ```bash
-npm install yxzq-utils
+npm install yxzq-utils-node
 ```
 
 ## 使用
 
 ### JavaScript 示例
+
 ```javascript
 const fs = require('fs');
 const path = require('path');
@@ -41,6 +44,7 @@ up();
 ```
 
 ### TypeScript 示例
+
 如果你在 TypeScript 环境下使用此库，请确保安装 `@types/node` 以获取 Node.js 内置模块的类型定义：
 ```bash
 npm install --save-dev @types/node
@@ -66,11 +70,13 @@ up();
 ```
 
 ### ES Module 支持
+
 ```javascript
 import { uploadResource } from 'yxzq-utils';
 ```
 
 ## 返回值
+
 调用 `uploadResource` 会返回一个 Promise，解析后的结果如下：
 ```javascript
 {
@@ -82,6 +88,7 @@ import { uploadResource } from 'yxzq-utils';
 ```
 
 ## 使用介绍
+
 - 当前工具支持以下 4 种文件类型：
   - **File**
   - **Blob**
@@ -90,9 +97,11 @@ import { uploadResource } from 'yxzq-utils';
 - 可以上传图片以及其他静态资源。
 
 ### 前端工具
+
 如果需要在前端工具中使用，请使用另一个工具 [yxzq-utils-browser](https://www.npmjs.com/package/yxzq-utils-browser)。
 
 ### 搭配工具
+
 使用此工具时，可以结合作者的另一个工具 [resource-storage](https://github.com/SupremacySakura/resource-storage)。
 
 ---
