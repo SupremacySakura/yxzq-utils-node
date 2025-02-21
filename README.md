@@ -1,3 +1,4 @@
+
 # yxzq-utils-node
 
 `yxzq-utils-node` 是一个工具库，支持在后端读取和上传文件，方便处理文件上传和静态资源管理。
@@ -22,7 +23,9 @@ npm install yxzq-utils-node
 
 ## 使用
 
-### JavaScript 示例
+### 上传函数 uploadResource
+
+#### JavaScript 示例
 
 ```javascript
 const fs = require('fs');
@@ -43,7 +46,7 @@ const up = async () => {
 up();
 ```
 
-### TypeScript 示例
+#### TypeScript 示例
 
 如果你在 TypeScript 环境下使用此库，请确保安装 `@types/node` 以获取 Node.js 内置模块的类型定义：
 ```bash
@@ -51,9 +54,9 @@ npm install --save-dev @types/node
 ```
 
 ```typescript
-import fs from 'fs';
-import path from 'path';
-import { uploadResource } from 'yxzq-utils';
+const fs = require('fs');
+const path = require('path');
+const { uploadResource } = require('yxzq-utils');
 
 const up = async () => {
     const file = await fs.promises.readFile(path.resolve(__dirname, 'yourFilePath'));
@@ -69,7 +72,7 @@ const up = async () => {
 up();
 ```
 
-### ES Module 支持
+#### ES Module 支持
 
 ```javascript
 import { uploadResource } from 'yxzq-utils';
@@ -78,6 +81,7 @@ import { uploadResource } from 'yxzq-utils';
 ## 返回值
 
 调用 `uploadResource` 会返回一个 Promise，解析后的结果如下：
+
 ```javascript
 {
     message: 'File uploaded successfully!' | 'File uploaded unsuccessfully!' | 'File does not exist!',
@@ -87,14 +91,72 @@ import { uploadResource } from 'yxzq-utils';
 }
 ```
 
+### 获取上传后文件地址函数 getFilePath
+
+#### JavaScript 示例
+
+```javascript
+const { getFilePath } = require('yxzq-utils');
+
+
+   getFilePath({ 
+    url: 'http://localhost:3100', // 服务器地址，默认值为 'http://localhost:3100'
+     extNameConfig:'all',// 查询文件后缀名参数,默认值为'all',可选值'photo',也可传入后缀名数组,如['.html','.jpg']
+   }).then(res =>{
+    console.log(res)
+})
+
+```
+
+#### TypeScript 示例
+
+如果你在 TypeScript 环境下使用此库，请确保安装 `@types/node` 以获取 Node.js 内置模块的类型定义：
+```bash
+npm install --save-dev @types/node
+```
+
+```typescript
+const { getFilePath } = require('yxzq-utils');
+
+
+   getFilePath({ 
+    url: 'http://localhost:3100', // 服务器地址，默认值为 'http://localhost:3100'
+     extNameConfig:'all',// 查询文件后缀名参数,默认值为'all',可选值'photo',也可传入后缀名数组,如['.html','.jpg']
+   }).then(res =>{
+    console.log(res)
+})
+```
+
+#### ES Module 支持
+
+```javascript
+import { getFilePath } from 'yxzq-utils';
+```
+
+## 返回值
+
+调用 `getFilePath` 会返回一个 Promise，解析后的结果如下：
+
+```javascript
+{
+    message: 'Query successful!' | 'An error occurred during the request',
+    files: Array<string> | [], // 文件路径（成功时）或 []（失败时）
+    code: 200 | 400,      // HTTP 状态码
+    error?: error.message // 错误信息（仅在失败时返回）
+}
+```
+
 ## 使用介绍
 
-- 当前工具支持以下 4 种文件类型：
-  - **File**
-  - **Blob**
-  - **Buffer**
-  - **fs.ReadStream**
-- 可以上传图片以及其他静态资源。
+### 文件支持
+
+当前工具支持以下文件类型：
+- **File**
+- **Blob**
+- **Buffer**
+- **fs.ReadStream**
+
+你可以上传图片或其他静态资源。
 
 ### 前端工具
 

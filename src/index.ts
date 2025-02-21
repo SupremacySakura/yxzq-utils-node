@@ -16,6 +16,16 @@ interface UploadResult {
     filePath: string | null
     code: number
 }
+interface GetFilePathConfig {
+    url?: string
+    extNameConfig?: 'all' | 'no' | Array<string>
+}
+interface GetFilePathResult {
+    message: string
+    files: Array<string>
+    code: number
+    err?: any
+}
 const uploadResource = async (file: File | Blob | Buffer | fs.ReadStream, config: UploadConfig = {}): Promise<UploadResult> => {
     if (!file) {
         return {
@@ -63,6 +73,28 @@ const uploadResource = async (file: File | Blob | Buffer | fs.ReadStream, config
     }
 
 }
+const getFilePath = async (config: GetFilePathConfig = {}): Promise<GetFilePathResult> => {
+
+    const {
+        url = 'http://localhost:3100',
+        extNameConfig = 'all'
+    } = config
+    const wholeUrl = path.join(url, '/filePath')
+    try {
+        const response = await axios.post(wholeUrl, {
+            extNameConfig: extNameConfig
+        })
+        return response.data
+    } catch (err) {
+        return {
+            message: 'An error occurred during the request',
+            files: [],
+            code: 400,
+            err: err,
+        }
+    }
+}
 export {
     uploadResource,
+    getFilePath
 }
